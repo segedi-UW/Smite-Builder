@@ -1,0 +1,81 @@
+Item, price, stats (health, mana, protP, protM, hp5, mp5, basic, cdr, passive, speed, powerP, powerM, penP, penM, attackSpeed, lifestealP, lifestealM)
+Iron Mail, 650, health=75, protP=10
+Light Blade, 600, powerP=5, attackSpeed=10
+Tiny Trinket, 550, powerM=20, lifestealM=6
+Mace, 650, powerP=15
+Morningstar, 600, powerP=10, mp5=5
+Boots, 500, speed=6
+Shoes, 500, speed=6
+Hidden Dagger, 700, powerP=15
+Spiked Gauntlet, 600, powerP=5, lifestealP=7
+Ancient Blade, 550, health=50, speed=5
+Cudgel, 650, powerP=10, health=75
+Round Shield, 650, powerP=10, protP=5
+Breastplate, 600, protP=20
+Cloak, 650, protP=10, protM=10
+Talisman, 650, health=75, protM=15
+Emerald Ring, 600, powerM=25
+Magic Focus, 650, powerM=25
+Traveler's Cloak, 590, protP=40, protM=10, health=125
+Uncommon Staff, 650, powerM=15, health=75
+Spellbook, 650, powerM=20, mana=75
+Lost Artifact, powerM=20, mp5=5
+Enchanted Buckler, 650, powerP=10, protM=10
+Imperial Helmet, 600, powerM=10, protP=20
+Short Bow, 650, attackSpeed=15
+Soul Stone, 800, powerM=20, mana=100, passive="Gain 1 Stack every time you hit an enemy with a basic attack. If you have 5 stacks, the next time you deal damage with an ability the stacks are consumed and you gain 40 mana, and that ability and any abilities used in the next 3s will deal bonus damage equal to having +40 Magical Power for those abilities."
+Glowing Emerald, 600, health=100, hp5=10
+Shuriken, 650, powerP=10, attackSpeed=5
+Katana, 650, powerP=10, speed=3
+Enchanted Kusari, protM=20, mp5=5
+Druid Stone, powerM=10, protM=20
+Mask, 500, health=50, mana=50
+Gem of Fate, 900, cdr=10
+Bluestone Pendant, 800, powerP=15, hp5=20, mp5=10, passive="Enemies hit by your damaging Abilities take an additional 25 Physical Damage over 2s. (Max 2 Stacks) Can be upgraded at level 20."
+Death's Toll, 650, powerP=15, powerM=25, health=75, passive="Hitting an enemy with a Basic Attack restores 2 Health (+0.4% of your Maximum Health) and 1 Mana (+1% of your Maximum Mana). Basic Attacks that deal AoE damage restore half as much for each enemy hit after the first. Can be upgraded at level 20."
+Gilded Arrow, 700, basic=15, health=50, mp5=7, passive="Every 10s the highest health enemy minion or jungle monster within 80 units of you is marked. If you secure the killing blow on that target you gain 10 bonus gold and 20% attack speed for 8s, and restore 20 Mana. Can be upgraded at level 20."
+Warrior's Axe, 600, protP=15, protM=10, health=75, passive="Damaging an enemy god steals 25 health away from your target and restores 25 mana. This effect can only occur once every 10s. Can be upgraded at level 20."
+Maniken Scepter, 750, basic=10, protP=10, passive="Enemies hit by your Basic Attacks are burned, taking 12 Physical Damage over 2s and have their Attack Speed reduced by 3.5%. Jungle Monsters take 4x the amount of damage and restore 15 Health and Mana when they die if they are burned. This effect can stack up to 4 times. Can be upgraded at level 20."
+Bumba's Dagger, 600, health=50, mana=50, passive="Your Basic Attacks deal +20 True Damage and your Abilities deal +30% Damage versus Jungle Monsters. When a Jungle Monster is killed you are restored for 10% of the Monster's Health and 25 Mana. Can be upgraded at level 20."
+Sands of Time, 700, powerM=30, mp5=10, cdr=10, passive="This item grants 2 MP5 per 10% of your missing Mana. Can be upgraded at level 20."
+Vampiric Shroud, 750, powerM=25, protP=10, health=75, lifestealM=5, passive="Damaging any enemy with an ability restores 4 health and 6 mana. Can only trigger once per target per ability. Can be upgraded at level 20."
+War Flag, 600, powerP=10, powerM=20, health=100, mp5=10, passive="Getting an assist for a minion or jungle monster dying restores 6 Health and 6 Mana to all allies within 55 units of you and provides allies 1% Movement Speed and 2% Attack Speed for 10s. This effect stacks up to 10 times. Can be upgraded at level 17."
+Sentinel's Gift, 600, protP=7, protM=7, health=75, mp5=7, passive="Getting the assist for an enemy minion or jungle monster dying will provide 7 Bonus gold and restore 12 Health and 8 Mana. If you are not within 30 units of an allied god for 20 seconds this passive is disabled until you are near an allied god again. Can be upgraded at level 17."
+Benevolence, 600, health=100, mp5=10, hp5=7, passive="You gain +3 GP5 (+0.5 per level) and +1 XpP5 (+0.5 per level). Any time you would gain experience or gold from slain enemies you only gain 90% of the reward. If an allied god is within 40 units of you give the lost 10% to that ally. Can be upgraded at level 17."
+Tainted Steel, 700, powerP=15, powerM=25, protP=15, protM=15, passive="Enemy gods that you hit have their healing taken reduced by 20% for 6s. Can be upgraded at level 20."
+Leather Cowl, 700, powerP=15, lifestealP=10, attackSpeed=5, passive="While you are within 66 units of an allied god you gain 10% Attack Speed. If you are alone you instead gain 5% Movement Speed. Can be upgraded at level 20."
+Conduit Gem, 700, powerM=25, mp5=10, passive="Every second you gain a stack of Arcane Energy, causing your next damaging ability to deal an additional 2 True Damage and remove all stacks. This effect stacks up to 20 times. Can be upgraded at level 20."
+Eye of the Jungle, 650, powerP=10, powerM=25, hp5=10, attackSpeed=10, passive="You deal 30% increased damage to Jungle Monsters. Upon defeating a Large Jungle Monster you place a ward at its location that lasts for 30 seconds. While in the jungle you gain +15 HP5 and +10 MP5 Can be upgraded at level 20."
+Warding Sigil, 700, protP=10, protM=15, health=75, passive="When you are hit by an ability you gain a stack of Dampening, decreasing damage taken by 5 for 5s. This occurs only once per ability cast. This can stack twice. Can be upgraded at level 20."
+Steel Mail, 750, protP=20, health=200
+Balanced Blade, 650, powerP=15, attackSpeed=15
+Asi, 1100, lifestealP=15, attackSpeed=25, penP=10, passive="If you drop below 35% Health, you gain an additional 25% Physical Lifesteal for 5 seconds. Can only occur once every 15 seconds."
+Enchanted Trinket, 550, powerM=30, health=100, lifestealM=12
+Talon Trinket, 850, powerM=60, mana=100, lifestealM=8
+Warrior's Bane, 850, powerP=20, penP=10
+Heavy Mace, 900, powerP=25, penP=10
+Charged Morningstar, 600, powerP=20, mana=150, mp5=7
+Hydra's Star, 600, powerP=20, cdr=5, mp5=7, passive="For 8 seconds after using an ability, your next basic attack will deal an additional 10% damage. The effect can only occur every 3 seconds."
+Combat Boots, 400, powerP=10, speed=12
+Magic Shoes, 400, powerM=20, speed=12
+Short Sword, 650, powerP=25
+Cursed Guantlet, 800, powerP=20, lifestealP=10
+Bound Gauntlet, 450, powerP=15, lifestealP=10
+Adventurer's Blade, 600, health=100, speed=7
+Cursed Blade, 700, health=75, attackSpeed=10, speed=5
+Heavy Hammer, 700, powerP=20, health=150
+Shillelagh, 650, powerP=15, health=200, mana=100
+Tower Shield, 500, powerP=20, protP=15
+Spiked Shield, 950, powerP=20, protP=30, passive="Reduces the Physical Protection of enemies within 55 units by 5%."
+Silver Breastplate, 450, protP=35, mana=200, mp5=10
+Cloak of Concentration, 850, protP=30, protM=30, cdr=7
+Cleric's Cloak, 500, protP=10, protM=10, health=200
+Armored Cloak, 900, protP=25, protM=25, health=125, mana=125
+Silver Talisman, 600, health=125, protM=45
+Enchanted Ring, 700, powerM=55, attackSpeed=10
+Spell Focus, 850, powerM=45, penM=10
+Enchanted Spear, 750, powerM=30, penM=10
+Sorcerer's Staff, 700, powerM=45, health=100, mana=100
+Rod of Healing, 850, powerM=45, health=100, speed=5, passive="Allied gods within 70 units have their Healing increased by 10%."
+Fortified Scepter, 700, powerM=50, health=150, ccr=5
+// TODO
