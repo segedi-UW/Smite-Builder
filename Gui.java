@@ -1,19 +1,20 @@
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke ;
 import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderWidths;
-import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class Gui extends Application {
 
@@ -79,7 +80,7 @@ public class Gui extends Application {
 		final double ALPHA = 0.5;
 
 		final double WIDTH = 1200;
-		final double HEIGHT = 700;
+		final double HEIGHT = 760;
 		final Color COLOR = Color.web(NAME, ALPHA);
 
 		return new Scene(pane, WIDTH, HEIGHT, COLOR);
@@ -97,6 +98,7 @@ public class Gui extends Application {
 		HBox itemArea = new HBox(itemBox, filterDisplay);
 
 		VBox display = itemDisplay.getDisplay();
+		display.setAlignment(Pos.BOTTOM_CENTER);
 
 		VBox rightPanel = new VBox(itemArea, display);
 

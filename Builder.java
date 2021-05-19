@@ -1,30 +1,36 @@
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
-import javafx.scene.image.Image;
+import java.util.Hashtable;
+import java.util.LinkedList;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import javafx.geometry.Orientation;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.input.ClipboardContent;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
-import javafx.scene.Node;
-import javafx.collections.FXCollections;
-import java.util.Hashtable;
-import java.util.LinkedList;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class Builder {
 
@@ -87,6 +93,8 @@ public class Builder {
 
 		private void setupClear(Button clear) {
 			clear.setOnAction(event -> {
+				if (build.isSelected())
+					build.fire();
 				setItem(null);
 			});
 		}
@@ -105,16 +113,19 @@ public class Builder {
 
 		private void setupDragDetected() {
 			cell.setOnDragDetected(event -> {
-				Dragboard db = cell.startDragAndDrop(TransferMode.MOVE);
+				if (item != null) {
+					Dragboard db = cell.startDragAndDrop(TransferMode.MOVE);
 
-				/* put a string on dragboard */
-				ClipboardContent content = new ClipboardContent();
-				content.putString(item.NAME);
-				db.setContent(content);
-
+					/* put a string on dragboard */
+					ClipboardContent content = new ClipboardContent();
+					content.putString(item.NAME);
+					db.setContent(content);
+				}
+				
 				event.consume();
 			});
 		}
+		
 
 		private void setupDragOver() {
 			cell.setOnDragOver(event -> {
@@ -154,7 +165,9 @@ public class Builder {
 						} else {
 							db.setContent(null);
 						}
-
+						
+						if (build.isSelected())
+							build.fire();
 						setItem(item);
 						success = true;
 					}
@@ -163,14 +176,19 @@ public class Builder {
 				event.consume();
 			});
 		}
+		
 
 		private void setupDragDone() {
 			cell.setOnDragDone(event -> {
 				if (event.getTransferMode() == TransferMode.MOVE) {
 					Dragboard db  = event.getDragboard();
+					if (build.isSelected())
+						build.fire();
+					
 					if (db.hasString()) {
 						String itemName = db.getString();
 						Item item = ItemUtil.lookupItem(itemName);
+						
 						setItem(item);
 					} else {
 						setItem(null);
@@ -180,7 +198,8 @@ public class Builder {
 			});
 
 		}
-
+		
+		
 		private void setupMouseClicked() {
 			cell.setOnMouseClicked(event -> {
 				displayer.setItem(item);
@@ -195,13 +214,13 @@ public class Builder {
 
 			return borderBox;
 		}
+		
 
 		private void setItem(Item item) {
 			if (this.item != null) {
 				totals.remove(this.item);
 				build.setSelected(false);
 			}
-
 
 			if (item != null) {
 				totals.put(item, item.STATS);
@@ -216,20 +235,19 @@ public class Builder {
 			this.item = item;
 			build.setSelected(false);
 		}
+		
 
 		public HBox getDisplay() {
 			return cell;
 		}
+		
 
-		public Item getItem() {
-			return item;
-		}
 	}
 
 	private class TotalDisplay {
 
 		private VBox display;
-		private TableView<ObservableMap<Item, Hashtable<Item.Stat, Integer>>> statsTable;
+		private StatTable statsTable;
 		private ObservableList<Item> build;
 
 		private class BuildCell extends ListCell<Item> {
@@ -252,12 +270,11 @@ public class Builder {
 		}
 
 		public TotalDisplay() {
-			statsTable = new TableView<>();
-			setupTable();
-
 			LinkedList<Item> items = new LinkedList<>();
 			build = FXCollections.observableList(items);
 
+			statsTable = new StatTable(build);
+			
 			ListView<Item> buildView = new ListView<>(build);
 			setupBuildView(buildView);
 
@@ -266,26 +283,17 @@ public class Builder {
 
 			final int LEFT = 40;
 
-			display = new VBox(statsLabel, statsTable, buildLabel, buildView);
+			display = new VBox(statsLabel, statsTable.getDisplay(), buildLabel, buildView);
 			VBox.setMargin(buildLabel, new Insets(0,0,0,LEFT));
 			VBox.setMargin(buildView, new Insets(0,0,0,LEFT));
 			VBox.setMargin(statsLabel, new Insets(0,0,0,LEFT));
-			VBox.setMargin(statsTable, new Insets(0,0,0,LEFT));
-		}
-
-		private void setupTable() {
-			// disable selection
-			// TODO
-			TableColumn<ObservableMap<Item, Hashtable<Item.Stat, Integer>>, Item.Stat> stats = new TableColumn<>("Stats");
-			TableColumn<ObservableMap<Item, Hashtable<Item.Stat, Integer>>, Integer> values = new TableColumn<>("Total");
-			statsTable.getColumns().setAll(stats, values);
+			VBox.setMargin(statsTable.getDisplay(), new Insets(0,0,0,LEFT));
 		}
 
 		private void setupBuildView(ListView<Item> buildView) {
 			final int WIDTH = 330;
 			final int HEIGHT = 300;
 
-			// TODO disable selection
 			buildView.setOrientation(Orientation.HORIZONTAL);
 			buildView.setPrefWidth(WIDTH);
 			buildView.setPrefHeight(HEIGHT);
@@ -367,8 +375,6 @@ public class Builder {
 		return labeledRow;
 	}
 	
-	// FIXME Need to make build remove items when they are changed (without explicitly being unbuilt)
-
 	private Label createBoldLabel(String text) {
 		Label label = new Label(text);
 		label.setStyle("-fx-font-weight: bolder");
