@@ -16,7 +16,6 @@ import java.util.Hashtable;
 
 public class ItemDisplayer implements ChangeListener<Item> {
 
-	private Item item;
 	private Label name;
 	private ListView<String> stats;
 	private ImageView imageView;
@@ -43,8 +42,6 @@ public class ItemDisplayer implements ChangeListener<Item> {
 	public void setItem(Item item) {
 		if (item == null)
 			return;
-
-		this.item = item;
 
 		name.setText(item.NAME);
 		setStats(item);
@@ -82,8 +79,8 @@ public class ItemDisplayer implements ChangeListener<Item> {
 		HBox statsImage = new HBox(stats, imageView);
 
 		VBox display = new VBox(name, statsImage, passive);
-		display.setMargin(name, new Insets(TOP, 0, 0, 0));
-		display.setMargin(passive, new Insets(0, RIGHT, 0, 0));
+		VBox.setMargin(name, new Insets(TOP, 0, 0, 0));
+		VBox.setMargin(passive, new Insets(0, RIGHT, 0, 0));
 		display.setAlignment(Pos.CENTER);
 		return display;
 	}

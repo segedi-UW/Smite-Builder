@@ -4,23 +4,22 @@ import java.io.InputStream;
 
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Test test = new Test();
 		test.testAll();
 		System.out.println("Passed All Tests!");
 	}
 
-	public void testAll() {
+	public void testAll() throws Exception {
 		testSplitItems();
 		testImageParser();
 		testResourceLoad();
 	}
 
 	public void testSplitItems() {
-		ItemParser parser = new ItemParser();
 		final String test = "Hello, my name is, AJ, God, why so many commas...,\"the, mans\"";
 		final String[] expected = {"Hello", " my name is", " AJ", " God", " why so many commas...", "\"the, mans\""};
-		String[] actual = parser.splitItems(test);
+		String[] actual = ItemParser.splitItems(test);
 		testArrayEquals(actual, expected);
 	}
 
@@ -33,24 +32,23 @@ public class Test {
 		String[] expected = {"soul-eater.jpg", "void-shield.jpg", "sentinels-embrace.jpg"};
 		String[] actual = new String[expected.length];
 
-		ImageParser parser = new ImageParser();
-
 		final String EXTENSION = "jpg";
 
 		for (int i = 0; i < actual.length; i++) {
-			actual[i] = parser.nameToFilename(names[i], EXTENSION);
+			actual[i] = ImageParser.nameToResourceName(names[i], EXTENSION);
 		}
 
 		testArrayEquals(actual, expected);
 	}
 
-	public void testResourceLoad() {
-		final String EXTENSION = "jpg";
+	public void testResourceLoad() throws Exception {
+		
 		String[] names = {"soul-eater.jpg", "void-shield.jpg", "sentinels-embrace.jpg"};
+		
 		for (int i = 0; i < names.length; i++) {
 			String filename = names[i];
-			InputStream stream = getClass().getResourceAsStream(filename);
-			Image image = new Image(stream);
+			InputStream stream = getClass().getClassLoader().getResourceAsStream(filename);
+			new Image(stream); // Creates the image - no exceptions no problems
 		}
 	}
 

@@ -1,7 +1,8 @@
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Hashtable;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 public class ItemParser {
@@ -22,13 +23,18 @@ public class ItemParser {
 		lineNumber = 1;
 
 		LinkedList<Item> items = new LinkedList<>();
+		
+		InputStream stream = ItemParser.class.getClassLoader().getResourceAsStream(filename);
+		InputStreamReader streamReader = new InputStreamReader(stream);
+		BufferedReader reader = new BufferedReader(streamReader);
 
-		Files.lines(Path.of(filename))
-			.forEach((line) -> {
-				Item item = parseCsvLine(line);
-				items.add(item);
-				lineNumber++;
-			});
+		reader.lines().forEach((line) -> {
+			Item item = parseCsvLine(line);
+			items.add(item);
+			lineNumber++;
+		});
+				
+		return items;
 	}
 
 	public static Hashtable<String, Item> parseCsvToHashtable(String filename) {
@@ -59,7 +65,6 @@ public class ItemParser {
 	}
 
 	public static String[] splitItems(String line) {
-		final String COMMA = ",";
 		final char COMMA_CHAR = ',';
 		final char QUOTE_CHAR = '"';
 

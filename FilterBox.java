@@ -6,7 +6,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.Node;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import java.util.function.Predicate;
 import java.util.LinkedList;
 
 public class FilterBox {

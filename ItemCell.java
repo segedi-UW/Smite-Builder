@@ -1,7 +1,5 @@
 import javafx.scene.control.ListCell;
-import java.util.Hashtable;
 import javafx.scene.image.ImageView;
-import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
@@ -26,7 +24,7 @@ public class ItemCell extends ListCell<Item> {
 			Label label = new Label(item.toString());
 			HBox cell = new HBox(imageView, label);
 			final int LEFT = 5;
-			cell.setMargin(label, new Insets(0, 0, 0, LEFT));
+			HBox.setMargin(label, new Insets(0, 0, 0, LEFT));
 			cell.setAlignment(Pos.CENTER_LEFT);
 			setGraphic(cell);
 			setOnDragDetected(event -> {

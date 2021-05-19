@@ -1,39 +1,19 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
-import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
-import javafx.geometry.Insets;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.control.CheckBox;
-import javafx.scene.Node;
-import javafx.scene.control.Tooltip;
-import java.util.function.Predicate;
 import javafx.scene.layout.BorderStroke ;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.control.MultipleSelectionModel;
-import javafx.beans.property.ObjectProperty;
-import javafx.scene.text.Font;
-import javafx.scene.image.Image;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.image.ImageView;
-import java.util.Hashtable;
-import java.util.LinkedList;
 
 public class Gui extends Application {
 

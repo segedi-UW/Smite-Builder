@@ -20,12 +20,8 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderStroke ;
-import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.Border;
 import javafx.scene.Node;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.BorderWidths;
 import javafx.collections.FXCollections;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -201,10 +197,11 @@ public class Builder {
 		}
 
 		private void setItem(Item item) {
-			if (this.item != null)
+			if (this.item != null) {
 				totals.remove(this.item);
+				build.setSelected(false);
+			}
 
-			this.item = item;
 
 			if (item != null) {
 				totals.put(item, item.STATS);
@@ -215,7 +212,8 @@ public class Builder {
 				display.setImage(displayImage);
 			} else
 				display.setImage(null);
-
+			
+			this.item = item;
 			build.setSelected(false);
 		}
 
@@ -246,7 +244,6 @@ public class Builder {
 					imageView.setFitWidth(SIZE);
 
 					HBox cell = new HBox(imageView);
-					final int LEFT = 5;
 					cell.setAlignment(Pos.CENTER_LEFT);
 					setGraphic(cell);
 				} else
@@ -270,10 +267,10 @@ public class Builder {
 			final int LEFT = 40;
 
 			display = new VBox(statsLabel, statsTable, buildLabel, buildView);
-			display.setMargin(buildLabel, new Insets(0,0,0,LEFT));
-			display.setMargin(buildView, new Insets(0,0,0,LEFT));
-			display.setMargin(statsLabel, new Insets(0,0,0,LEFT));
-			display.setMargin(statsTable, new Insets(0,0,0,LEFT));
+			VBox.setMargin(buildLabel, new Insets(0,0,0,LEFT));
+			VBox.setMargin(buildView, new Insets(0,0,0,LEFT));
+			VBox.setMargin(statsLabel, new Insets(0,0,0,LEFT));
+			VBox.setMargin(statsTable, new Insets(0,0,0,LEFT));
 		}
 
 		private void setupTable() {
@@ -361,14 +358,16 @@ public class Builder {
 
 		final Insets inset = new Insets(0, 0, 0, LEFT);
 
-		labeledRow.setMargin(label, inset);
-		labeledRow.setMargin(row, inset);
+		VBox.setMargin(label, inset);
+		VBox.setMargin(row, inset);
 
 		Border border = Gui.createSolidBorder("IVORY");
 		labeledRow.setBorder(border);
 
 		return labeledRow;
 	}
+	
+	// FIXME Need to make build remove items when they are changed (without explicitly being unbuilt)
 
 	private Label createBoldLabel(String text) {
 		Label label = new Label(text);

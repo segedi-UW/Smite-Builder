@@ -1,11 +1,12 @@
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
-import javafx.scene.image.Image;
-import java.io.File;
 import java.util.Hashtable;
+import javafx.scene.image.Image;
 
 public class ImageParser {
 
-	public static String nameToFilename(String name, String extension) {
+	public static String nameToResourceName(String name, String extension) {
 		final String SPACE = " ";
 		final String DASH = "-";
 		final String EMPTY_STRING = "";
@@ -20,18 +21,14 @@ public class ImageParser {
 		return name;
 	}
 
-	public static String itemToFilename(Item item, String extension) {
+	public static String itemToResourceName(Item item, String extension) {
 		String name = item.NAME;
-		return nameToFilename(name, extension);
+		return nameToResourceName(name, extension);
 	}
 
 	public Hashtable<Item, Image> parseResourcesForItemjpg(Collection<Item> items) {
 		final int SIZE = items.size() * 2 + 1;
-		final double WIDTH = 126.0;
-		final double HEIGHT = 126.0;
-		final boolean PRESERVE = true;
-		final boolean SMOOTH = true;
-		final String EXTENSION = "jpg";
+
 
 		Hashtable<Item, Image> table = new Hashtable<>(SIZE);
 
@@ -45,18 +42,30 @@ public class ImageParser {
 
 	private Image tryParseImage(Item item) {
 		try {
-			parseImage(item);
+			return parseImage(item);
 		} catch (IllegalArgumentException e) {
-			System.out.println("Could not load image for " + filename + ": " + e.getMessage());
+			System.out.println("Could not load image for " + item + ": " + e.getMessage());
 		} catch (NullPointerException e) {
-			System.out.println("Could not load image for " + filename + ": " + e.getMessage());
+			System.out.println("Could not load image for " + item + ": " + e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("Failed to close stream. " + e.getMessage());
 		}
-
+		throw new IllegalArgumentException("Error loading images");
 	}
 
-	private Image parseImage(Item item) {
-		String filename = itemToFilename(item, EXTENSION);
-		ImputStream stream = getClass().getResourceAsStream(filename);
-		return new Image(stream, WIDTH, HEIGHT, PRESERVE, SMOOTH);
+	private Image parseImage(Item item) throws IOException {
+		final double WIDTH = 126.0;
+		final double HEIGHT = 126.0;
+		final boolean PRESERVE = true;
+		final boolean SMOOTH = true;
+		final String EXTENSION = "jpg";
+		
+		final String filename = itemToResourceName(item, EXTENSION);
+		InputStream stream = getClass().getClassLoader().getResourceAsStream(filename);
+		Image image = new Image(stream, WIDTH, HEIGHT, PRESERVE, SMOOTH);
+		
+		stream.close();
+		return image;
 	}
 }
