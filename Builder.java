@@ -170,7 +170,6 @@ public class Builder {
 			});
 		}
 		
-
 		private void setupDragDone() {
 			cell.setOnDragDone(event -> {
 				if (event.getTransferMode() == TransferMode.MOVE) {
@@ -192,7 +191,6 @@ public class Builder {
 
 		}
 		
-		
 		private void setupMouseClicked() {
 			cell.setOnMouseClicked(event -> {
 				displayer.setItem(item);
@@ -208,7 +206,6 @@ public class Builder {
 			return borderBox;
 		}
 		
-
 		private void setItem(Item item) {
 			if (this.item != null) {
 				totals.remove(this.item);
@@ -229,12 +226,10 @@ public class Builder {
 			build.setSelected(false);
 		}
 		
-
 		public HBox getDisplay() {
 			return cell;
 		}
 		
-
 	}
 
 	private class TotalDisplay {

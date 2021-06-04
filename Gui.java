@@ -105,7 +105,6 @@ public class Gui extends Application {
 		pane.setRight(rightPanel);
 	}
 
-
 	private void addCenterPane() {
 		Builder builder = new Builder();
 		pane.setCenter(builder.getDisplay());
