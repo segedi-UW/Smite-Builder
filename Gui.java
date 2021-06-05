@@ -156,6 +156,8 @@ public class Gui extends Application {
 		types.add(ButtonType.YES);
 		types.add(ButtonType.CANCEL);
 		
+		alert.setTitle("Confirmation");
+		alert.setHeaderText("Save File First?");
 		alert.setContentText(message);
 			alert.showAndWait().ifPresent(button -> {
 				if (button == ButtonType.YES)
