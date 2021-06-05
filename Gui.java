@@ -1,7 +1,12 @@
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
@@ -25,6 +30,8 @@ public class Gui extends Application {
 	private static final ListView<Item> itemSelection = createItemSelection();
 	private static final ItemDisplayer itemDisplay = new ItemDisplayer();
 	private static final Builder builder = new Builder();
+	private static final Menu filename = new Menu("Current File: New File"); 
+	private static String filenameText = "New File";
 
 	public static void main(String[] args) {
 		Application.launch();
@@ -81,6 +88,11 @@ public class Gui extends Application {
 		return builder;
 	}
 	
+	public static void setFilename(String name) {
+		filenameText = name;
+		filename.setText("Current File: " + name);
+	}
+	
 	private static Scene createScene() {
 		final String NAME = "MEDIUMTURQUOISE";
 		final double ALPHA = 0.5;
@@ -95,20 +107,62 @@ public class Gui extends Application {
 	private static void addTopPane() {
 		MenuItem load = new MenuItem("Load");
 		load.setOnAction(event -> {
-			FileHandler.promptLoadFile();
+			askToSave(() -> {
+				FileHandler.promptLoadFile();
+			});
+		});
+		MenuItem newFile = new MenuItem("New");
+		newFile.setOnAction(event -> {
+			askToSave(() -> {
+				ArrayList<Builder.BuildBox> boxes = builder.getBuildBoxes();
+				for (Builder.BuildBox box : boxes) {
+					box.setItem(null);
+				}
+			});
 		});
 		MenuItem save = new MenuItem("Save");
 		save.setOnAction(event -> {
-			FileHandler.saveBuild(builder.getBuildBoxes());			
+			FileHandler.saveBuild();			
 		});
 		
 		Menu file = new Menu("File");
 		ObservableList<MenuItem> items = file.getItems();
-		items.addAll(load, save);
 		
-		MenuBar bar = new MenuBar(file);
+		items.addAll(load, newFile);
+		
+		ObservableList<MenuItem> filenameItems = filename.getItems();
+		filenameItems.add(save);
+		
+		MenuBar bar = new MenuBar(file, filename);
 		
 		pane.setTop(bar);
+	}
+	
+	private static void askToSave(Runnable runnable) {
+		String message = "Would you like to save " + filenameText + "?";
+		confirm(message, () -> {
+			FileHandler.saveBuild();
+			runnable.run();
+		}, () -> {
+			runnable.run();
+		});
+	}
+	
+	private static void confirm(String message, Runnable yes, Runnable no) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		ObservableList<ButtonType> types = alert.getButtonTypes();
+		types.clear();
+		types.add(ButtonType.NO);
+		types.add(ButtonType.YES);
+		types.add(ButtonType.CANCEL);
+		
+		alert.setContentText(message);
+			alert.showAndWait().ifPresent(button -> {
+				if (button == ButtonType.YES)
+					yes.run();
+				else if (button == ButtonType.NO)
+					no.run();
+			});
 	}
 	
 	private static void addRightPane() {

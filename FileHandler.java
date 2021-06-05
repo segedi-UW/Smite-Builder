@@ -40,16 +40,21 @@ public class FileHandler {
 				if (item != null)
 					box.setItem(item);
 			}
+			Gui.setFilename(file.getName());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void saveBuild(ArrayList<Builder.BuildBox> boxes) {
+	public static void saveBuild() {
+		Builder builder = Gui.getBuilder();
+		ArrayList<Builder.BuildBox> boxes = builder.getBuildBoxes();
 		FileChooser chooser = getDefaultFileChooser();
 		File file = chooser.showSaveDialog(getDefaultWindow());
-		if (file != null)
+		if (file != null) {
 			writeBuildToFile(boxes, file);
+			Gui.setFilename(file.getName());
+		}
 	}
 	
 	private static void writeBuildToFile(ArrayList<Builder.BuildBox> boxes, File file) {
