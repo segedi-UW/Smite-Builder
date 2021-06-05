@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -31,8 +32,9 @@ public class Builder {
 	private final ItemDisplayer displayer;
 	private final TotalDisplay total;
 	private final ObservableMap<Item, Hashtable<Item.Stat, Integer>> totals;
+	private final ArrayList<BuildBox> buildBoxes; 
 
-	private class BuildBox {
+	public class BuildBox {
 
 		private final Background HIGHLIGHT = createHighlight();
 		private Item item;
@@ -206,7 +208,7 @@ public class Builder {
 			return borderBox;
 		}
 		
-		private void setItem(Item item) {
+		public void setItem(Item item) {
 			if (this.item != null) {
 				totals.remove(this.item);
 				build.setSelected(false);
@@ -224,6 +226,10 @@ public class Builder {
 			
 			this.item = item;
 			build.setSelected(false);
+		}
+		
+		public Item getItem() {
+			return item;
 		}
 		
 		public HBox getDisplay() {
@@ -315,6 +321,7 @@ public class Builder {
 		total = new TotalDisplay();
 		Hashtable<Item, Hashtable<Item.Stat, Integer>> table = new Hashtable<>();
 		totals = FXCollections.observableMap(table);
+		buildBoxes = new ArrayList<>();
 
 		VBox starter = createBuilderRow("Starter");
 		VBox core = createBuilderRow("Core");
@@ -335,11 +342,12 @@ public class Builder {
 		HBox row = new HBox();
 		row.setSpacing(SPACING);
 
-		ObservableList<Node> children = row.getChildren();;
+		ObservableList<Node> boxes = row.getChildren();;
 
 		for (int i = 0; i < BOXES; i++) {
 			BuildBox box = new BuildBox();
-			children.add(box.getDisplay());
+			boxes.add(box.getDisplay());
+			buildBoxes.add(box); // Adds to the class boxes field
 		}
 
 		Label label = createBoldLabel(text);
@@ -369,6 +377,10 @@ public class Builder {
 		return label;
 	}
 
+	public ArrayList<BuildBox> getBuildBoxes() {
+		return buildBoxes;
+	}
+	
 	public VBox getDisplay() {
 		return DISPLAY;
 	}

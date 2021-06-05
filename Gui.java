@@ -4,6 +4,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
@@ -18,9 +21,10 @@ import javafx.stage.Stage;
 
 public class Gui extends Application {
 
-	private final BorderPane pane;
-	private final ListView<Item> itemSelection;
-	private final ItemDisplayer itemDisplay;
+	private static final BorderPane pane = new BorderPane();
+	private static final ListView<Item> itemSelection = createItemSelection();
+	private static final ItemDisplayer itemDisplay = new ItemDisplayer();
+	public static final Builder builder = new Builder();
 
 	public static void main(String[] args) {
 		Application.launch();
@@ -50,14 +54,11 @@ public class Gui extends Application {
 	}
 
 	public Gui() {
-		itemSelection = createItemSelection();
-		itemDisplay = new ItemDisplayer();
 
 		MultipleSelectionModel<Item> model = itemSelection.getSelectionModel();
 		model.selectedItemProperty().addListener(itemDisplay);
 		model.selectFirst();
 
-		pane = new BorderPane();
 		pane.setBackground(Background.EMPTY);
 	}
 
@@ -67,6 +68,7 @@ public class Gui extends Application {
 		stage.setTitle(TITLE);
 
 		Scene scene = createScene();
+		addTopPane();
 		addRightPane();
 		addCenterPane();
 
@@ -75,7 +77,7 @@ public class Gui extends Application {
 		stage.show();
 	}
 
-	private Scene createScene() {
+	private static Scene createScene() {
 		final String NAME = "MEDIUMTURQUOISE";
 		final double ALPHA = 0.5;
 
@@ -86,7 +88,26 @@ public class Gui extends Application {
 		return new Scene(pane, WIDTH, HEIGHT, COLOR);
 	}
 
-	private void addRightPane() {
+	private static void addTopPane() {
+		MenuItem load = new MenuItem("Load");
+		load.setOnAction(event -> {
+			FileHandler.promptLoadFile();
+		});
+		MenuItem save = new MenuItem("Save");
+		save.setOnAction(event -> {
+			FileHandler.saveBuild(builder.getBuildBoxes());			
+		});
+		
+		Menu file = new Menu("File");
+		ObservableList<MenuItem> items = file.getItems();
+		items.addAll(load, save);
+		
+		MenuBar bar = new MenuBar(file);
+		
+		pane.setTop(bar);
+	}
+	
+	private static void addRightPane() {
 		FilterBox filterBox = new FilterBox(itemSelection);
 
 		VBox filterDisplay = filterBox.getDisplay();
@@ -105,8 +126,7 @@ public class Gui extends Application {
 		pane.setRight(rightPanel);
 	}
 
-	private void addCenterPane() {
-		Builder builder = new Builder();
+	private static void addCenterPane() {
 		pane.setCenter(builder.getDisplay());
 	}
 
