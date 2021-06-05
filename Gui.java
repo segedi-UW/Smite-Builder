@@ -24,7 +24,7 @@ public class Gui extends Application {
 	private static final BorderPane pane = new BorderPane();
 	private static final ListView<Item> itemSelection = createItemSelection();
 	private static final ItemDisplayer itemDisplay = new ItemDisplayer();
-	public static final Builder builder = new Builder();
+	private static final Builder builder = new Builder();
 
 	public static void main(String[] args) {
 		Application.launch();
@@ -77,6 +77,10 @@ public class Gui extends Application {
 		stage.show();
 	}
 
+	public static Builder getBuilder() {
+		return builder;
+	}
+	
 	private static Scene createScene() {
 		final String NAME = "MEDIUMTURQUOISE";
 		final double ALPHA = 0.5;

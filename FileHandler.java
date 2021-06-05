@@ -25,7 +25,7 @@ public class FileHandler {
 	
 	private static void loadFile(File file) {
 		try (Stream<String> stream = Files.lines(file.toPath())) {
-			Builder builder = Gui.builder;
+			Builder builder = Gui.getBuilder();
 			ArrayList<Builder.BuildBox> boxes = builder.getBuildBoxes();
 			ArrayList<Item> items = new ArrayList<>();
 			stream.forEach(line -> {
